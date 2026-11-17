@@ -19,5 +19,8 @@ WORKDIR /var/www/html
 # 5. Umgebungsvariable für Root-Zugriff setzen
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+#RUN composer dump-autoload
+
 RUN a2enmod rewrite
 
+CMD bash -c "composer install && apache2-foreground"
