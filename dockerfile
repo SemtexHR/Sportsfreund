@@ -19,8 +19,5 @@ WORKDIR /var/www/html
 # 5. Umgebungsvariable für Root-Zugriff setzen
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# 6. JETZT NEU: Sichere Version ^7.0 installieren!
-RUN composer require firebase/php-jwt:^7.0 --no-interaction --optimize-autoloader
-
 RUN a2enmod rewrite
 

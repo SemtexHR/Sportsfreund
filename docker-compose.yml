@@ -23,7 +23,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html
+      - ./backend:/var/www/html
       - /var/www/html/vendor
     depends_on:
       - mariadb
