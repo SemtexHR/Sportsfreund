@@ -9,13 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as HomeIndexRouteImport } from './routes/Home/index'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateAddPlaceRouteImport } from './routes/create/addPlace'
 import { Route as ProfileProfileSettingsRouteImport } from './routes/profile/profileSettings'
 
-const HomeIndexRoute = HomeIndexRouteImport.update({
-  id: '/Home/',
-  path: '/Home/',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CreateAddPlaceRoute = CreateAddPlaceRouteImport.update({
@@ -30,42 +30,42 @@ const ProfileProfileSettingsRoute = ProfileProfileSettingsRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/create/addPlace': typeof CreateAddPlaceRoute
   '/profile/profileSettings': typeof ProfileProfileSettingsRoute
-  '/Home/': typeof HomeIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/create/addPlace': typeof CreateAddPlaceRoute
   '/profile/profileSettings': typeof ProfileProfileSettingsRoute
-  '/Home': typeof HomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/create/addPlace': typeof CreateAddPlaceRoute
   '/profile/profileSettings': typeof ProfileProfileSettingsRoute
-  '/Home/': typeof HomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/create/addPlace' | '/profile/profileSettings' | '/Home/'
+  fullPaths: '/' | '/create/addPlace' | '/profile/profileSettings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/create/addPlace' | '/profile/profileSettings' | '/Home'
-  id: '__root__' | '/create/addPlace' | '/profile/profileSettings' | '/Home/'
+  to: '/' | '/create/addPlace' | '/profile/profileSettings'
+  id: '__root__' | '/' | '/create/addPlace' | '/profile/profileSettings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   CreateAddPlaceRoute: typeof CreateAddPlaceRoute
   ProfileProfileSettingsRoute: typeof ProfileProfileSettingsRoute
-  HomeIndexRoute: typeof HomeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/Home/': {
-      id: '/Home/'
-      path: '/Home'
-      fullPath: '/Home/'
-      preLoaderRoute: typeof HomeIndexRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/create/addPlace': {
@@ -86,9 +86,9 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   CreateAddPlaceRoute: CreateAddPlaceRoute,
   ProfileProfileSettingsRoute: ProfileProfileSettingsRoute,
-  HomeIndexRoute: HomeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

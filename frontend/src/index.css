@@ -2,6 +2,11 @@
 @import '@fontsource/poppins';
 @import '@fontsource/jersey-15';
 
+
+html, body, #root {
+  height: 100%;
+}
+
 @theme{
     --color-torquise-400: #2D97A9;
     --color-coral-400: #F1794E;
@@ -10,4 +15,6 @@
 
     --font-jersey: 'Jersey 15', serif;
     --font-poppins: 'Poppins', sans-serif;
+
+    --rounded-spf: 5px;
 }
