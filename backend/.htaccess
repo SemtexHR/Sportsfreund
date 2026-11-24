@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. API-Anfragen (/api/...) an /api/index.php weiterleiten
+RewriteRule ^api/ api/index.php [QSA,L]
+
+# 2. Alles andere (was nicht schon mit /src/ oder /api/ beginnt) intern nach /src/ leiten
+RewriteCond %{REQUEST_URI} !^/src/
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteRule ^(.*)$ src/$1 [L]
