@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import HeaderGradient from '../../components/header/HeaderGradient'
+import HeaderGradient from '../../../components/header/HeaderGradient'
 
-export const Route = createFileRoute('/create/addPlace')({
+export const Route = createFileRoute('/_app/create/addPlace')({
   component: RouteComponent,
 })
 

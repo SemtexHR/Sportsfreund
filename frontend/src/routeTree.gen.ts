@@ -10,53 +10,121 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CreateAddPlaceRouteImport } from './routes/create/addPlace'
-import { Route as ProfileProfileSettingsRouteImport } from './routes/profile/profileSettings'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppMapRouteImport } from './routes/_app/map'
+import { Route as AuthSigninRouteImport } from './routes/auth/signin'
+import { Route as AuthSignupRouteImport } from './routes/auth/signup'
+import { Route as LandingLandingRouteImport } from './routes/landing/landing'
+import { Route as AppCreateAddPlaceRouteImport } from './routes/_app/create/addPlace'
+import { Route as AppProfileProfileSettingsRouteImport } from './routes/_app/profile/profileSettings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CreateAddPlaceRoute = CreateAddPlaceRouteImport.update({
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppMapRoute = AppMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => AppRoute,
+} as any)
+const AuthSigninRoute = AuthSigninRouteImport.update({
+  id: '/auth/signin',
+  path: '/auth/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandingLandingRoute = LandingLandingRouteImport.update({
+  id: '/landing/landing',
+  path: '/landing/landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppCreateAddPlaceRoute = AppCreateAddPlaceRouteImport.update({
   id: '/create/addPlace',
   path: '/create/addPlace',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRoute,
 } as any)
-const ProfileProfileSettingsRoute = ProfileProfileSettingsRouteImport.update({
-  id: '/profile/profileSettings',
-  path: '/profile/profileSettings',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AppProfileProfileSettingsRoute =
+  AppProfileProfileSettingsRouteImport.update({
+    id: '/profile/profileSettings',
+    path: '/profile/profileSettings',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/create/addPlace': typeof CreateAddPlaceRoute
-  '/profile/profileSettings': typeof ProfileProfileSettingsRoute
+  '/map': typeof AppMapRoute
+  '/auth/signin': typeof AuthSigninRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/landing/landing': typeof LandingLandingRoute
+  '/create/addPlace': typeof AppCreateAddPlaceRoute
+  '/profile/profileSettings': typeof AppProfileProfileSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/create/addPlace': typeof CreateAddPlaceRoute
-  '/profile/profileSettings': typeof ProfileProfileSettingsRoute
+  '/map': typeof AppMapRoute
+  '/auth/signin': typeof AuthSigninRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/landing/landing': typeof LandingLandingRoute
+  '/create/addPlace': typeof AppCreateAddPlaceRoute
+  '/profile/profileSettings': typeof AppProfileProfileSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/create/addPlace': typeof CreateAddPlaceRoute
-  '/profile/profileSettings': typeof ProfileProfileSettingsRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/map': typeof AppMapRoute
+  '/auth/signin': typeof AuthSigninRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/landing/landing': typeof LandingLandingRoute
+  '/_app/create/addPlace': typeof AppCreateAddPlaceRoute
+  '/_app/profile/profileSettings': typeof AppProfileProfileSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create/addPlace' | '/profile/profileSettings'
+  fullPaths:
+    | '/'
+    | '/map'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/landing/landing'
+    | '/create/addPlace'
+    | '/profile/profileSettings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create/addPlace' | '/profile/profileSettings'
-  id: '__root__' | '/' | '/create/addPlace' | '/profile/profileSettings'
+  to:
+    | '/'
+    | '/map'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/landing/landing'
+    | '/create/addPlace'
+    | '/profile/profileSettings'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/map'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/landing/landing'
+    | '/_app/create/addPlace'
+    | '/_app/profile/profileSettings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CreateAddPlaceRoute: typeof CreateAddPlaceRoute
-  ProfileProfileSettingsRoute: typeof ProfileProfileSettingsRoute
+  AppRoute: typeof AppRouteWithChildren
+  AuthSigninRoute: typeof AuthSigninRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  LandingLandingRoute: typeof LandingLandingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,27 +136,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/create/addPlace': {
-      id: '/create/addPlace'
-      path: '/create/addPlace'
-      fullPath: '/create/addPlace'
-      preLoaderRoute: typeof CreateAddPlaceRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile/profileSettings': {
-      id: '/profile/profileSettings'
+    '/_app/map': {
+      id: '/_app/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof AppMapRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/auth/signin': {
+      id: '/auth/signin'
+      path: '/auth/signin'
+      fullPath: '/auth/signin'
+      preLoaderRoute: typeof AuthSigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/landing/landing': {
+      id: '/landing/landing'
+      path: '/landing/landing'
+      fullPath: '/landing/landing'
+      preLoaderRoute: typeof LandingLandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/create/addPlace': {
+      id: '/_app/create/addPlace'
+      path: '/create/addPlace'
+      fullPath: '/create/addPlace'
+      preLoaderRoute: typeof AppCreateAddPlaceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile/profileSettings': {
+      id: '/_app/profile/profileSettings'
       path: '/profile/profileSettings'
       fullPath: '/profile/profileSettings'
-      preLoaderRoute: typeof ProfileProfileSettingsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppProfileProfileSettingsRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
 
+interface AppRouteChildren {
+  AppMapRoute: typeof AppMapRoute
+  AppCreateAddPlaceRoute: typeof AppCreateAddPlaceRoute
+  AppProfileProfileSettingsRoute: typeof AppProfileProfileSettingsRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppMapRoute: AppMapRoute,
+  AppCreateAddPlaceRoute: AppCreateAddPlaceRoute,
+  AppProfileProfileSettingsRoute: AppProfileProfileSettingsRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CreateAddPlaceRoute: CreateAddPlaceRoute,
-  ProfileProfileSettingsRoute: ProfileProfileSettingsRoute,
+  AppRoute: AppRouteWithChildren,
+  AuthSigninRoute: AuthSigninRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  LandingLandingRoute: LandingLandingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

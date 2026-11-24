@@ -18,3 +18,11 @@ html, body, #root {
 
     --rounded-spf: 5px;
 }
+
+
+@layer components {
+
+    .btn{
+        @apply rounded-[5px] bg-coral-400 hover:bg-coral-200;
+        }
+}
