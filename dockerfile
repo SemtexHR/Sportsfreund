@@ -1,4 +1,4 @@
-FROM php:8.3-apache
+FROM php:8.5-apache
 
 # 1. System-Pakete installieren, die Composer zum Entpacken benötigt
 RUN apt-get update && apt-get install -y \
