@@ -6,11 +6,11 @@ services:
     restart: unless-stopped
     environment:
       MARIADB_ROOT_PASSWORD: root_secret
-      MARIADB_DATABASE: app_db
+      MARIADB_DATABASE: sportsfreund
       MARIADB_USER: app_user
       MARIADB_PASSWORD: app_secret
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - ./mariadb_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
