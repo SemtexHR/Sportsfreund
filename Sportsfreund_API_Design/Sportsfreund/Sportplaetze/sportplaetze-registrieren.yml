@@ -1,0 +1,108 @@
+info:
+  name: sportplaetze-registrieren
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: /api/sportplaetze
+  body:
+    type: json
+    data: |-
+      {
+        "laengengrad": 16.3375,
+        "breitengrad": 48.2165,
+        "name": "Sportplatz Beispiel",
+        "beschreibung": "Ein schöner Sportplatz"
+      }
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Sportplatz registrieren
+
+  Legt einen neuen Sportplatz an.
+
+  ## Request
+
+  **Methode:** POST
+
+  **URL:** `/api/sportplaetze`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Content-Type | application/json |
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Body-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | laengengrad | number | Ja | Längengrad des Sportplatzes |
+  | breitengrad | number | Ja | Breitengrad des Sportplatzes |
+  | name | string | Ja | Name des Sportplatzes |
+  | beschreibung | string | Ja | Beschreibung des Sportplatzes |
+
+  **Beispiel:**
+
+  ```json
+  {
+    "laengengrad": 16.3375,
+    "breitengrad": 48.2165,
+    "name": "Sportplatz Beispiel",
+    "beschreibung": "Ein schöner Sportplatz"
+  }
+  ```
+
+  ## Responses
+
+  ### 201 Created – Erfolgreich
+
+  Der Sportplatz wurde erstellt.
+
+  ```json
+  {
+    "success": true,
+    "message": "Sportplatz erstellt",
+    "data": {
+      "id": 1
+    }
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 500 Internal Server Error – Sportplatz konnte nicht erstellt werden
+
+  ```json
+  {
+    "success": false,
+    "error": "Der Sportplatz konnte nicht erstellt werden"
+  }
+  ```

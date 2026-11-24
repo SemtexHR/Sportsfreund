@@ -1,0 +1,57 @@
+info:
+  name: logout
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: /api/user/logout
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Abmelden
+
+  Meldet den angemeldeten Nutzer ab und macht den verwendeten Token ungültig.
+
+  ## Request
+
+  **Methode:** POST
+
+  **URL:** `/api/user/logout`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Der Nutzer wurde abgemeldet.
+
+  ```json
+  {
+    "success": true,
+    "message": "Abmeldung erfolgreich"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```

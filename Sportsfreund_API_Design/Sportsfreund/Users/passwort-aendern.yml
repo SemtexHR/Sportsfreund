@@ -1,0 +1,99 @@
+info:
+  name: passwort-aendern
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: /api/user/changepw
+  body:
+    type: json
+    data: |-
+      {
+        "old_password": "geheim123",
+        "new_password": "neuesPasswort456"
+      }
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Passwort ändern
+
+  Ändert das Passwort des angemeldeten Nutzers. Der Nutzer wird anhand des Tokens bestimmt.
+
+  ## Request
+
+  **Methode:** POST
+
+  **URL:** `/api/user/changepw`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Content-Type | application/json |
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Body-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | old_password | string | Ja | Bisheriges Passwort |
+  | new_password | string | Ja | Neues Passwort |
+
+  **Beispiel:**
+
+  ```json
+  {
+    "old_password": "geheim123",
+    "new_password": "neuesPasswort456"
+  }
+  ```
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Das Passwort wurde geändert.
+
+  ```json
+  {
+    "success": true,
+    "message": "Passwort geändert"
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 403 Forbidden – Altes Passwort falsch
+
+  ```json
+  {
+    "success": false,
+    "error": "Altes Passwort falsch"
+  }
+  ```

@@ -1,0 +1,93 @@
+info:
+  name: anwesenheiten-austragen
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: /api/anwesenheit?sportplatz_id=1&von=2026-11-03T16:00:00Z&bis=2026-11-03T18:00:00Z
+  params:
+    - name: sportplatz_id
+      value: "1"
+      type: query
+    - name: von
+      value: 2026-11-03T16:00:00Z
+      type: query
+    - name: bis
+      value: 2026-11-03T18:00:00Z
+      type: query
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Anwesenheit austragen
+
+  Entfernt eine bestehende Anwesenheit des angemeldeten Nutzers von einem Sportplatz. Der Nutzer wird anhand des Tokens bestimmt.
+
+  ## Request
+
+  **Methode:** DELETE
+
+  **URL:** `/api/anwesenheit`
+
+  ## Query-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | sportplatz_id | number | Ja | ID des Sportplatzes |
+  | von | string | Ja | Beginn der einzutragenden Anwesenheit als ISO 8601 Zeitstempel |
+  | bis | string | Ja | Ende der eingetragenen Anwesenheit als ISO 8601 Zeitstempel |
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Die Anwesenheit wurde entfernt.
+
+  ```json
+  {
+    "success": true,
+    "message": "Anwesenheit erfolgreich ausgetragen"
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 404 Not Found – Sportplatz oder Anwesenheit nicht gefunden
+
+  ```json
+  {
+    "success": false,
+    "error": "Sportplatz oder Anwesenheit nicht gefunden"
+  }
+  ```

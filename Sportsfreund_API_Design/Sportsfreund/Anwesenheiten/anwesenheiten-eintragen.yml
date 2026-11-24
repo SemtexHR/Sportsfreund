@@ -1,0 +1,102 @@
+info:
+  name: anwesenheiten-eintragen
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: /api/anwesenheit
+  body:
+    type: json
+    data: |-
+      {
+        "sportplatz_id": 1,
+        "von": "2026-11-03T16:00:00Z",
+        "bis": "2026-11-03T18:00:00Z"
+      }
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Anwesenheit eintragen
+
+  Trägt die Anwesenheit des angemeldeten Nutzers auf einem Sportplatz für einen bestimmten Zeitraum ein. Der Nutzer wird anhand des Tokens bestimmt.
+
+  ## Request
+
+  **Methode:** POST
+
+  **URL:** `/api/anwesenheit`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Content-Type | application/json |
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Body-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | sportplatz_id | number | Ja | ID des Sportplatzes |
+  | von | string | Ja | Beginn der Anwesenheit als ISO 8601 Zeitstempel |
+  | bis | string | Ja | Ende der Anwesenheit als ISO 8601 Zeitstempel |
+
+  **Beispiel:**
+
+  ```json
+  {
+    "sportplatz_id": 1,
+    "von": "2026-11-03T16:00:00Z",
+    "bis": "2026-11-03T18:00:00Z"
+  }
+  ```
+
+  ## Responses
+
+  ### 201 Created – Erfolgreich
+
+  Die Anwesenheit wurde eingetragen.
+
+  ```json
+  {
+    "success": true,
+    "message": "Anwesenheit erfolgreich eingetragen"
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 404 Not Found – Sportplatz nicht gefunden
+
+  ```json
+  {
+    "success": false,
+    "error": "Sportplatz nicht gefunden"
+  }
+  ```

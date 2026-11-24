@@ -1,0 +1,66 @@
+info:
+  name: user-loeschen
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: /api/user
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Nutzer löschen
+
+  Löscht den angemeldeten Nutzer. Der Nutzer wird anhand des Tokens bestimmt, ein Request-Body ist nicht nötig.
+
+  ## Request
+
+  **Methode:** DELETE
+
+  **URL:** `/api/user`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Der Nutzer wurde gelöscht.
+
+  ```json
+  {
+    "success": true,
+    "message": "Nutzer gelöscht"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 404 Not Found – Nutzer nicht gefunden
+
+  ```json
+  {
+    "success": false,
+    "error": "Nutzer nicht gefunden"
+  }
+  ```

@@ -1,0 +1,115 @@
+info:
+  name: sportplaetze-suche
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: /api/sportplaetze/suche
+  params:
+    - name: ""
+      value: ""
+      type: query
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Sportplätze nach Name suchen
+
+  Liefert alle Sportplätze zurück, deren Name den Suchbegriff enthält. Die Suche ignoriert Groß- und Kleinschreibung.
+
+  ## Request
+
+  **Methode:** GET
+
+  **URL:** `/api/sportplaetze/suche`
+
+  ## Query-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | name | string | Ja | Suchbegriff (mindestens 2 Zeichen), muss im Namen enthalten sein |
+  | breitengrad | number | Nein | Breitengrad des Standorts, für Entfernung und Sortierung |
+  | laengengrad | number | Nein | Längengrad des Standorts, für Entfernung und Sortierung |
+  | zeit | string | Nein | Zeitpunkt (ISO 8601) für die Anzahl der Anwesenden. Standard: aktuelle Zeit |
+
+  `breitengrad` und `laengengrad` müssen immer gemeinsam angegeben werden. Ohne Standort werden die Treffer alphabetisch nach Name sortiert, mit Standort nach Entfernung (nächster zuerst).
+
+  **Beispiel:**
+
+  `GET /api/sportplaetze/suche?name=beispiel&breitengrad=48.2165&laengengrad=16.3375`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Gibt eine Liste der passenden Sportplätze zurück. `personen` ist die Anzahl der Anwesenden zum Zeitpunkt `zeit`. `entfernung` (in km) ist nur enthalten, wenn ein Standort angegeben wurde.
+
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "name": "Sportplatz Beispiel",
+        "breitengrad": 48.2165,
+        "laengengrad": 16.3375,
+        "beschreibung": "Ein schöner Sportplatz",
+        "personen": 5,
+        "entfernung": 0.4
+      }
+    ]
+  }
+  ```
+
+  ### 200 OK – Keine Ergebnisse
+
+  ```json
+  {
+    "success": true,
+    "data": []
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  Zum Beispiel fehlt `name`, der Suchbegriff ist zu kurz oder nur eine der beiden Koordinaten wurde angegeben.
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 500 Internal Server Error – Datenbankfehler
+
+  ```json
+  {
+    "success": false,
+    "error": "Datenbankfehler"
+  }
+  ```

@@ -1,0 +1,92 @@
+info:
+  name: login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: /api/user/login
+  body:
+    type: json
+    data: |-
+      {
+        "username": "max.mustermann",
+        "password": "geheim123"
+      }
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Anmelden
+
+  Meldet einen Nutzer an und liefert einen Token zurück, der bei allen weiteren Anfragen im `Authorization`-Header mitgesendet werden muss. Dieser Endpunkt benötigt selbst keinen Token.
+
+  ## Request
+
+  **Methode:** POST
+
+  **URL:** `/api/user/login`
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Content-Type | application/json |
+  | Accept | application/json |
+
+  ## Body-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | username | string | Ja | Benutzername |
+  | password | string | Ja | Passwort des Nutzers |
+
+  **Beispiel:**
+
+  ```json
+  {
+    "username": "max.mustermann",
+    "password": "geheim123"
+  }
+  ```
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Der Nutzer wurde angemeldet.
+
+  ```json
+  {
+    "success": true,
+    "message": "Anmeldung erfolgreich",
+    "data": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Username oder Passwort falsch
+
+  ```json
+  {
+    "success": false,
+    "error": "Username oder Passwort falsch"
+  }
+  ```

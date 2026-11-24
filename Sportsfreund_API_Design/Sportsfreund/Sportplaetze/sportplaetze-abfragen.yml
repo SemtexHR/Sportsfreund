@@ -1,0 +1,110 @@
+info:
+  name: sportplaetze-abfragen
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: /api/sportplaetze?breitengrad=48.2165&laengengrad=16.3375&umkreis=10
+  params:
+    - name: breitengrad
+      value: "48.2165"
+      type: query
+    - name: laengengrad
+      value: "16.3375"
+      type: query
+    - name: umkreis
+      value: "10"
+      type: query
+  auth:
+    type: bearer
+    token: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  # Sportplätze abfragen
+
+  Liefert alle existierenden Sportplätze innerhalb eines bestimmten Umkreises zurück.
+
+  ## Request
+
+  **Methode:** GET
+
+  **URL:** `/api/sportplaetze`
+
+  ## Query-Parameter
+
+  | Parameter | Typ | Pflicht | Beschreibung |
+  |---|---|---|---|
+  | breitengrad | number | Ja | Breitengrad des Standorts |
+  | laengengrad | number | Ja | Längengrad des Standorts |
+  | umkreis | number | Ja | Suchradius in km |
+
+  ## Headers
+
+  | Header | Wert |
+  |---|---|
+  | Accept | application/json |
+  | Authorization | Bearer Token |
+
+  ## Responses
+
+  ### 200 OK – Erfolgreich
+
+  Gibt eine Liste der gefundenen Sportplätze zurück.
+
+  ```json
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "name": "Sportplatz Beispiel",
+        "breitengrad": 48.2165,
+        "laengengrad": 16.3375,
+        "beschreibung": "Ein schöner Sportplatz"
+      }
+    ]
+  }
+  ```
+
+  ### 200 OK – Keine Ergebnisse
+
+  ```json
+  {
+    "success": true,
+    "data": []
+  }
+  ```
+
+  ### 400 Bad Request – Ungültige Parameter
+
+  ```json
+  {
+    "success": false,
+    "error": "Ungültige Parameter"
+  }
+  ```
+
+  ### 401 Unauthorized – Token fehlt oder ungültig
+
+  ```json
+  {
+    "success": false,
+    "error": "Nicht autorisiert"
+  }
+  ```
+
+  ### 500 Internal Server Error – Datenbankfehler
+
+  ```json
+  {
+    "success": false,
+    "error": "Datenbankfehler"
+  }
+  ```
