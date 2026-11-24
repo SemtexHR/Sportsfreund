@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+require __DIR__ . '/../vendor/autoload.php';
+
 use PHPUnit\Framework\TestCase;
 
 class ApiTests extends TestCase {
@@ -147,15 +149,69 @@ class ApiTests extends TestCase {
 
     // User Tests
 
-    public function test_user_login_valid(): void{}
+    public function test_user_login_valid(): void{
+        $service = "";
+        $result = $service;
 
-    public function test_user_login_invalid(): void{}
+        $this->assertIsArray($result);
 
-    public function test_user_logout(): void{}
+        $this->assertArrayHasKey('message', $result);
+        $this->assertEquals('Anmeldung erfolgreich', $result['message']);
 
-    public function test_user_password_aendern(): void{}
+        $this->assertArrayHasKey('data', $result);
+        $data = $result['data'];
 
-    public function test_user_erstellen(): void{}
+        $this->assertArrayHasKey('token', $result);
+        $this->assertIsString($result['token']);
+    }
 
-    public function test_user_loeschen(): void{}
+    public function test_user_login_invalid(): void{
+        $service = "";
+        $result = $service;
+
+        $this->assertIsArray($result);
+
+        $this->assertArrayHasKey('error', $result);
+        $this->assertEquals('Username oder Passwort falsch', $result['error']);
+    }
+
+    public function test_user_logout(): void{
+        $service = "";
+        $result = $service;
+
+        $this->assertIsArray($result);
+
+        $this->assertArrayHasKey('message', $result);
+        $this->assertEquals('Abmeldung erfolgreich', $result['message']);
+    }
+
+    public function test_user_password_aendern(): void{
+        $service = "";
+        $result = $service;
+
+        $this->assertIsArray($result);
+
+        $this->assertArrayHasKey('message', $result);
+        $this->assertEquals('Passwort geändert', $result['message']);
+    }
+
+    public function test_user_erstellen(): void{
+        $service = "";
+        $result = $service;
+
+        $this->assertIsArray($result);
+
+        $this->assertArrayHasKey('message', $result);
+        $this->assertEquals('Nutzer erstellt', $result['message']);
+    }
+
+    public function test_user_loeschen(): void{
+        $service = "";
+        $result = $service;
+
+        $this->assertIsArray($result);
+
+        $this->assertArrayHasKey('message', $result);
+        $this->assertEquals('Nutzer gelöscht', $result['message']);
+    }
 }
