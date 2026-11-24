@@ -1,3 +1,1 @@
 ### Sportsfreund
-
-Blödes GIT
