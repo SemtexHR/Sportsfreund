@@ -1,4 +1,4 @@
-FROM php:8.3-apache
+FROM php:8.5-apache
 
 # 1. System-Pakete installieren, die Composer zum Entpacken benötigt
 RUN apt-get update && apt-get install -y \
@@ -19,8 +19,8 @@ WORKDIR /var/www/html
 # 5. Umgebungsvariable für Root-Zugriff setzen
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# 6. JETZT NEU: Sichere Version ^7.0 installieren!
-RUN composer require firebase/php-jwt:^7.0 --no-interaction --optimize-autoloader
+#RUN composer dump-autoload
 
 RUN a2enmod rewrite
 
+CMD bash -c "composer install && apache2-foreground"

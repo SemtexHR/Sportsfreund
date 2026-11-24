@@ -1,10 +1,10 @@
 <?php
 // 1. Prüfen, ob der Autoloader im Container existiert
-if (!file_exists('vendor/autoload.php')) {
+if (!file_exists('../vendor/autoload.php')) {
     die("Fehler: 'vendor/autoload.php' wurde im Container nicht gefunden!");
 }
 
-require 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;

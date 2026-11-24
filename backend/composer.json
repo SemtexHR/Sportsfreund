@@ -1,0 +1,13 @@
+{
+    "name": "htlw3r/spf",
+    "description": "Backend service for the school-project 'Sportsfreund' made by students at the HTL Rennweg",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Htlw3r\\Spf\\": "src/"
+        }
+    },
+    "require": {
+        "firebase/php-jwt": "^7.0"
+    }
+}
